@@ -1,0 +1,487 @@
+{
+  "status": "All 29 handwritten page numbers verified visually and indexed by topic. Page summaries are editorial drafts and scholarly review is pending.",
+  "sources": [
+    {
+      "source_id": "SRC-001",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.25.14.jpeg",
+      "handwritten_page_number": 1,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Qur’an 5:6 and purification before prayer",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "سورہ المائدہ ۵:۶ اور نماز سے پہلے پاکی",
+      "prototype_topic_groups": [
+        "Qur’an and narrated sources"
+      ]
+    },
+    {
+      "source_id": "SRC-002",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.25.47.jpeg",
+      "handwritten_page_number": 2,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Narrations on complete washing and the heels",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "پورا پاؤں اور ایڑیاں دھونے کی روایات",
+      "prototype_topic_groups": [
+        "Qur’an and narrated sources"
+      ]
+    },
+    {
+      "source_id": "SRC-003",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.26.07.jpeg",
+      "handwritten_page_number": 3,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Narrations on wiping the head",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "سر کے مسح سے متعلق روایات",
+      "prototype_topic_groups": [
+        "Qur’an and narrated sources"
+      ]
+    },
+    {
+      "source_id": "SRC-004",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.26.29.jpeg",
+      "handwritten_page_number": 4,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Bismillah, miswak, hand washing and rinsing",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "بسم اللہ، مسواک، ہاتھ دھونا اور کلی",
+      "prototype_topic_groups": [
+        "Qur’an and narrated sources"
+      ]
+    },
+    {
+      "source_id": "SRC-005",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.26.50.jpeg",
+      "handwritten_page_number": 5,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Starting on the right, repetitions and wiping",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "دائیں طرف سے شروع کرنا، کتنی بار دھونا اور مسح",
+      "prototype_topic_groups": [
+        "Qur’an and narrated sources"
+      ]
+    },
+    {
+      "source_id": "SRC-006",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.27.12.jpeg",
+      "handwritten_page_number": 6,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Wiping the ears and cleaning between fingers and toes",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "کانوں کا مسح اور انگلیوں کے بیچ صفائی",
+      "prototype_topic_groups": [
+        "Qur’an and narrated sources"
+      ]
+    },
+    {
+      "source_id": "SRC-007",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.27.37.jpeg",
+      "handwritten_page_number": 7,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Narrations on recommended practices",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "وہ کام جو کرنا اچھا ہے، ان کے بارے میں روایات",
+      "prototype_topic_groups": [
+        "Qur’an and narrated sources"
+      ]
+    },
+    {
+      "source_id": "SRC-008",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.27.55.jpeg",
+      "handwritten_page_number": 8,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Remembrance during Wudu",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "وضو کرتے وقت کیا پڑھیں",
+      "prototype_topic_groups": [
+        "Qur’an and narrated sources"
+      ]
+    },
+    {
+      "source_id": "SRC-009",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.28.18.jpeg",
+      "handwritten_page_number": 9,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Words after Wudu and avoiding waste",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "وضو کے بعد کیا پڑھیں اور پانی ضائع کرنے سے کیسے بچیں",
+      "prototype_topic_groups": [
+        "Qur’an and narrated sources"
+      ]
+    },
+    {
+      "source_id": "SRC-010",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.28.31.jpeg",
+      "handwritten_page_number": 10,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "The manuscript’s list of obligatory acts and Sunnah practices",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "اصل لکھائی میں وضو کے فرض اور سنت کام",
+      "prototype_topic_groups": [
+        "Practice categories"
+      ]
+    },
+    {
+      "source_id": "SRC-011",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.28.53.jpeg",
+      "handwritten_page_number": 11,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Recommended practices and etiquette",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "وہ کام جو کرنا اچھا ہے اور وضو کے آداب",
+      "prototype_topic_groups": [
+        "Practice categories"
+      ]
+    },
+    {
+      "source_id": "SRC-012",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.29.45.jpeg",
+      "handwritten_page_number": 12,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Supplications and discouraged practices",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "دعائیں اور وہ کام جن سے بچنا بہتر ہے",
+      "prototype_topic_groups": [
+        "Practice categories"
+      ]
+    },
+    {
+      "source_id": "SRC-013",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.29.56.jpeg",
+      "handwritten_page_number": 13,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Preparation, intention and rinsing the mouth",
+      "lesson_ids": [
+        "wudu-preparation",
+        "wudu-rinse-and-wash"
+      ],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "selected_excerpt_adapted_for_prototype",
+      "topic_urdu": "تیاری، نیت اور کلی",
+      "prototype_topic_groups": [
+        "Guided Wudu method"
+      ]
+    },
+    {
+      "source_id": "SRC-014",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.30.10.jpeg",
+      "handwritten_page_number": 14,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Nose, face, arms and head",
+      "lesson_ids": [
+        "wudu-rinse-and-wash",
+        "wudu-wipe-and-wash-feet"
+      ],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "selected_excerpt_adapted_for_prototype",
+      "topic_urdu": "ناک، چہرہ، بازو اور سر",
+      "prototype_topic_groups": [
+        "Guided Wudu method"
+      ]
+    },
+    {
+      "source_id": "SRC-015",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.30.36.jpeg",
+      "handwritten_page_number": 15,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Ears and feet / Introduction and qualities of a miswak",
+      "lesson_ids": [
+        "wudu-wipe-and-wash-feet",
+        "wudu-miswak-and-sources"
+      ],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "selected_excerpt_adapted_for_prototype",
+      "topic_urdu": "کان اور پاؤں / مسواک کیا ہے اور کیسی ہونی چاہیے",
+      "prototype_topic_groups": [
+        "Guided Wudu method",
+        "Miswak and oral care"
+      ]
+    },
+    {
+      "source_id": "SRC-016",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.30.54.jpeg",
+      "handwritten_page_number": 16,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Method, care and alternatives in the manuscript",
+      "lesson_ids": [
+        "wudu-miswak-and-sources"
+      ],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "selected_excerpt_adapted_for_prototype",
+      "topic_urdu": "مسواک کا طریقہ، صفائی اور اس کی جگہ کیا استعمال کریں",
+      "prototype_topic_groups": [
+        "Miswak and oral care"
+      ]
+    },
+    {
+      "source_id": "SRC-017",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.31.16.jpeg",
+      "handwritten_page_number": 17,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Benefits listed in the manuscript, part one",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "مسواک کے فائدے، پہلا حصہ",
+      "prototype_topic_groups": [
+        "Miswak and oral care"
+      ]
+    },
+    {
+      "source_id": "SRC-018",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.31.29.jpeg",
+      "handwritten_page_number": 18,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Benefits listed in the manuscript, continuation",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "مسواک کے فائدے، دوسرا حصہ",
+      "prototype_topic_groups": [
+        "Miswak and oral care"
+      ]
+    },
+    {
+      "source_id": "SRC-019",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.31.47.jpeg",
+      "handwritten_page_number": 19,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Injections, blood tests and donation",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "انجیکشن، خون کا ٹیسٹ اور خون دینا",
+      "prototype_topic_groups": [
+        "Purification in everyday situations"
+      ]
+    },
+    {
+      "source_id": "SRC-020",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.32.09.jpeg",
+      "handwritten_page_number": 20,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Passing wind and other private questions",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "ہوا نکلنا اور دوسرے ذاتی سوال",
+      "prototype_topic_groups": [
+        "Purification in everyday situations"
+      ]
+    },
+    {
+      "source_id": "SRC-021",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.32.44.jpeg",
+      "handwritten_page_number": 21,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Wounds, discharge and bleeding from the mouth",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "زخم، رطوبت اور منہ سے خون",
+      "prototype_topic_groups": [
+        "Purification in everyday situations"
+      ]
+    },
+    {
+      "source_id": "SRC-022",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.33.02.jpeg",
+      "handwritten_page_number": 22,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Bleeding from the mouth and endoscopy",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "منہ سے خون اور اینڈوسکوپی",
+      "prototype_topic_groups": [
+        "Purification in everyday situations"
+      ]
+    },
+    {
+      "source_id": "SRC-023",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.33.22.jpeg",
+      "handwritten_page_number": 23,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Urine collection bags and loss of consciousness",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "پیشاب کی تھیلی اور بے ہوشی",
+      "prototype_topic_groups": [
+        "Health and personal circumstances"
+      ]
+    },
+    {
+      "source_id": "SRC-024",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.33.42.jpeg",
+      "handwritten_page_number": 24,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Dialysis and a note on intoxication",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "ڈائلیسس اور نشے سے متعلق نوٹ",
+      "prototype_topic_groups": [
+        "Health and personal circumstances"
+      ]
+    },
+    {
+      "source_id": "SRC-025",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.34.03.jpeg",
+      "handwritten_page_number": 25,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Laughter during prayer, intimacy, discharge and welding-related tearing",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "نماز میں ہنسی، ازدواجی تعلق، رطوبت اور ویلڈنگ سے آنکھوں میں پانی",
+      "prototype_topic_groups": [
+        "Health and personal circumstances"
+      ]
+    },
+    {
+      "source_id": "SRC-026",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.34.19.jpeg",
+      "handwritten_page_number": 29,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Sleep, distractions and the virtues of remaining in Wudu",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "نیند، مصروفیات اور وضو میں رہنے کے فائدے",
+      "prototype_topic_groups": [
+        "Common misconceptions and reflection"
+      ]
+    },
+    {
+      "source_id": "SRC-027",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.34.44.jpeg",
+      "handwritten_page_number": 28,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Ordinary bodily fluids, tears and other exceptions discussed by the author",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "جسم سے نکلنے والی عام رطوبت، آنسو اور دوسری صورتیں",
+      "prototype_topic_groups": [
+        "Common misconceptions and reflection"
+      ]
+    },
+    {
+      "source_id": "SRC-028",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.35.23.jpeg",
+      "handwritten_page_number": 27,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Leakage during Tawaf, clothing and personal hygiene",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "طواف کے دوران قطرے، لباس اور ذاتی صفائی",
+      "prototype_topic_groups": [
+        "Health and personal circumstances"
+      ]
+    },
+    {
+      "source_id": "SRC-029",
+      "file": "Content_Taharat/WhatsApp Image 2026-11-03 at 19.35.36.jpeg",
+      "handwritten_page_number": 26,
+      "identification_status": "verified_visually",
+      "transcription": null,
+      "unclear_passages": [],
+      "topic": "Vomiting, enemas and urine leakage",
+      "lesson_ids": [],
+      "religious_reference_status": "not_reviewed",
+      "editorial_status": "topic_indexed_for_prototype",
+      "topic_urdu": "قے، حقنہ اور پیشاب کے قطرے",
+      "prototype_topic_groups": [
+        "Health and personal circumstances"
+      ]
+    }
+  ],
+  "additional_references": [
+    {
+      "file": "WhatsApp Image 2026-10-30 at 08.50.12.jpeg",
+      "role": "unclassified"
+    }
+  ]
+}
