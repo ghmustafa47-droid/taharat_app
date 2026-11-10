@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import inventory from './inventory.json';
 import { comparisons, decisions, learning, paths, priorities, prototype, roles, studio, topics } from './content';
 import ProposalDetails, { proposalLinks } from './ProposalDetails';
+import { art, artSet, num, pad } from './format';
 import './style.css';
 
 const sections = [
@@ -13,16 +14,15 @@ const sections = [
   ['studio','Content Studio','سبق بنانے کی جگہ'],
   ['release','First release','پہلا ورژن'],
 ];
-const art = name => '/art/taharah-' + name + '-paper-cut.png';
 const screen = name => '/screens/' + name + '.png';
 
 function LinkButton({ href, children, secondary = false, external = false }) {
   return <a className={'action' + (secondary ? ' secondary' : '')} href={href}
-    {...(external ? {target:'_blank', rel:'noreferrer'} : {})}>{children}<span aria-hidden="true">↗</span></a>;
+    {...(external ? {target:'_blank', rel:'noreferrer'} : {})}>{children}<span aria-hidden="true" className="flip">↗</span></a>;
 }
 
-function Heading({ number, tag, title, children }) {
-  return <div className="section-heading"><div className="eyebrow"><b>{number}</b> {tag}</div>
+function Heading({ number, ur, tag, title, children }) {
+  return <div className="section-heading"><div className="eyebrow"><b>{pad(number, ur)}</b> {tag}</div>
     <h2>{title}</h2>{children && <p>{children}</p>}</div>;
 }
 
@@ -45,7 +45,7 @@ function Stepper({ items, locale, wide = false }) {
   return <div className={'stepper ' + (wide ? 'wide' : '')}>
     <div className="step-list" role="group" aria-label={t('Choose a step','مرحلہ چنیں')}>
       {items.map((item,i) => <button key={i} type="button" aria-pressed={selected === i} onClick={() => setSelected(i)}>
-        <span>{String(i+1).padStart(2,'0')}</span>{pick(item.title)}
+        <span>{pad(i+1, ur)}</span>{pick(item.title)}
       </button>)}
     </div>
     <figure className="step-display" aria-live="polite">
@@ -75,8 +75,8 @@ function Manuscript({ ur }) {
 
   return <>
     <div className="comparison-grid">{comparisons.map(c => <article className="card" key={c.pages[0]}>
-      <small>{t('Manuscript pages','مسودے کے صفحات')} <bdi>{c.pages.length === 1 ? c.pages[0] : c.pages[0] + '–' + c.pages.at(-1)}</bdi></small>
-      <h3>{c.title[Number(ur)]}</h3><p>{c.before[Number(ur)]} <span aria-hidden="true">→</span> {c.after[Number(ur)]}</p>
+      <small>{c.pages.length === 1 ? t('Manuscript page','مسودے کا صفحہ') : t('Manuscript pages','مسودے کے صفحات')} <bdi>{num(c.pages.length === 1 ? c.pages[0] : c.pages[0] + '–' + c.pages.at(-1), ur)}</bdi></small>
+      <h3>{c.title[Number(ur)]}</h3><p>{c.before[Number(ur)]} <span aria-hidden="true" className="flip">→</span> {c.after[Number(ur)]}</p>
       <button className="text-button" onClick={() => open(inventory.sources.find(s => s.handwritten_page_number === c.pages[0]))}>
         {t('See the original and the lesson idea','اصل صفحہ اور سبق کا نمونہ دیکھیں')}
       </button>
@@ -90,18 +90,18 @@ function Manuscript({ ur }) {
       <p className="muted">{t('I checked the page numbers against the original. The topic names are a first draft. We still need to check the references and any handwriting that is hard to read.',
           'میں نے صفحہ نمبر اصل تحریر سے ملا لیے ہیں۔ موضوعات کے نام ابھی عارضی ہیں۔ حوالے اور مشکل لکھائی ابھی دیکھنی ہے۔')}</p>
       <div className="page-list">{visible.map(s => <button key={s.source_id} onClick={() => open(s)}>
-        <b>{s.handwritten_page_number}</b><span>{ur ? s.topic_urdu : s.topic}</span><span aria-hidden="true">↗</span>
+        <b>{num(s.handwritten_page_number, ur)}</b><span>{ur ? s.topic_urdu : s.topic}</span><span aria-hidden="true" className="flip">↗</span>
       </button>)}</div>
     </div>
     <dialog ref={dialog} onClick={e => { if (e.target === dialog.current) dialog.current.close(); }}>
       {selected && <div className="dialog-body">
-        <div className="inventory-head"><h3>{t('Manuscript page','مسودے کا صفحہ')} {selected.handwritten_page_number}</h3>
+        <div className="inventory-head"><h3>{t('Manuscript page','مسودے کا صفحہ')} {num(selected.handwritten_page_number, ur)}</h3>
           <button className="close" aria-label={t('Close manuscript viewer','مسودہ بند کریں')} onClick={() => dialog.current.close()}>×</button></div>
         <p>{ur ? selected.topic_urdu : selected.topic} <small className="badge">{t('Page number verified','صفحہ نمبر چیک ہو گیا')}</small></p>
         {match?.pages.length > 1 && <div className="tabs" role="group" aria-label={t('Pages in this comparison','اس موازنے کے صفحات')}>
           {match.pages.map(number => <button key={number} aria-pressed={number === selected.handwritten_page_number}
             onClick={() => setSelected(inventory.sources.find(source => source.handwritten_page_number === number))}>
-            {t('Page','صفحہ')} {number}
+            {t('Page','صفحہ')} {num(number, ur)}
           </button>)}
         </div>}
         <div className="tabs" role="group" aria-label={t('Source view','صفحہ کیسے دیکھیں')}>
@@ -111,7 +111,7 @@ function Manuscript({ ur }) {
         {view === 0 && (process.env.EXPO_PUBLIC_SHOW_MANUSCRIPTS !== '1'
           ? <p className="notice">{t('Original scans are available in the private review copy.','اصل تصویریں صرف نجی جائزے کی کاپی میں موجود ہیں۔')}</p>
           : imageAllowed ? <>
-          <img className="manuscript-image" src={'/manuscript/' + selected.source_id + '.jpg'} alt={t('Handwritten manuscript page','قلمی مسودے کا صفحہ') + ' ' + selected.handwritten_page_number} />
+          <img className="manuscript-image" src={'/manuscript/' + selected.source_id + '.jpg'} alt={t('Handwritten manuscript page','قلمی مسودے کا صفحہ') + ' ' + num(selected.handwritten_page_number, ur)} />
           <LinkButton external secondary href={'/manuscript/' + selected.source_id + '.jpg'}>{t('Open full-size image','مکمل تصویر کھولیں')}</LinkButton>
         </> : <div className="notice"><p>{t('Open originals only if you have permission to review the manuscript.','اصل تصاویر صرف اس صورت میں کھولیں جب آپ کو مسودے کے جائزے کی اجازت ہو۔')}</p>
           <button className="action" onClick={() => setImageAllowed(true)}>{t('I have permission to view','مجھے دیکھنے کی اجازت ہے')}</button></div>)}
@@ -221,13 +221,13 @@ export default function App() {
           <LinkButton secondary href={detailUrl}>{t('Read the full proposal','پوری تجویز پڑھیں')}</LinkButton></div>
           <div className="hero-notes"><span>{t('No ads','اشتہار نہیں ہوں گے')}</span><span>{t('Offline learning planned','انٹرنیٹ کے بغیر سبق')}</span><span>{t('We’ll check the references','حوالے چیک ہوں گے')}</span></div>
         </div>
-        <figure className="hero-art"><img src={art('welcome')} alt={t('Paper-cut illustration of a learner preparing for Wudu','وضو کی تیاری کرتے بچے کی کاغذی تصویر')} />
-          <figcaption><span>{t('The Taharah learning experience','طہارت میں سیکھنے کا تجربہ')}</span><b>01 / 07</b></figcaption>
+        <figure className="hero-art"><img src={art('welcome')} srcSet={artSet('welcome')} sizes="(max-width: 900px) 100vw, 46vw" width="1200" height="900" fetchPriority="high" decoding="async" alt={t('Paper-cut illustration of a learner preparing for Wudu','وضو کی تیاری کرتے بچے کی کاغذی تصویر')} />
+          <figcaption><span>{t('The Taharah learning experience','طہارت میں سیکھنے کا تجربہ')}</span><b><bdi dir="ltr">{pad(1, ur)} / {pad(7, ur)}</bdi></b></figcaption>
         </figure>
       </div>
       <section id="vision" className="feature">
         <div className="wrap vision-grid">
-          <div><Heading number="01" tag={t('The vision','ہمارا تصور')} title={t('What comes next?','اگلا قدم کیا ہے؟')}>
+          <div><Heading number={1} ur={ur} tag={t('The vision','ہمارا تصور')} title={t('What comes next?','اگلا قدم کیا ہے؟')}>
             {t('Say you forget what comes next in Wudu. Open a short lesson, follow the pictures, try a question, and tap the reference if you want to read more.',
           'فرض کریں وضو کرتے ہوئے یاد نہیں آ رہا کہ اگلا قدم کیا ہے۔ سبق کھولیں، تصویریں دیکھیں، ایک سوال حل کریں اور مزید جاننا ہو تو حوالہ کھول لیں۔')}
           </Heading>
@@ -242,20 +242,20 @@ export default function App() {
         </div>
       </section>
       <section id="audiences" className="wrap section">
-        <Heading number="02" tag={t('Learning paths','سیکھنے کے راستے')} title={t('One app, three audiences','ایک ایپ، تین طرح کے سیکھنے والے')}>
+        <Heading number={2} ur={ur} tag={t('Learning paths','سیکھنے کے راستے')} title={t('One app, four learning paths','ایک ایپ، چار راستے')}>
           {t('Everyone learns from the same references. Parents get help teaching at home, children learn with pictures, teens can try short questions on their own, and adults can read more detail.',
           'حوالے سب کے لیے ایک ہی ہوں گے۔ والدین کو گھر میں سمجھانے میں مدد ملے گی، بچے تصویروں سے سیکھیں گے، ٹین ایجر خود چھوٹے سوال حل کر سکیں گے اور بڑے مزید تفصیل پڑھ سکیں گے۔')}
         </Heading>
         <div className="tabs" role="group" aria-label={t('Choose an audience','گروہ منتخب کریں')}>
           {paths.map((p,i) => <button key={i} aria-pressed={path===i} onClick={() => setPath(i)}>{pick(p.title)}</button>)}
         </div>
-        <article className="audience-panel" aria-live="polite"><img src={art(activePath.art)} alt={pick(activePath.title)} loading="lazy" />
+        <article className="audience-panel" aria-live="polite"><img src={art(activePath.art)} srcSet={artSet(activePath.art)} sizes="(max-width: 900px) 100vw, 40vw" width="1200" height="900" alt={pick(activePath.title)} loading="lazy" decoding="async" />
           <div><div className="eyebrow">{t('Same topic · Wudu','ایک ہی موضوع · وضو')}</div><h3>{pick(activePath.title)}</h3>
           <p>{pick(activePath.copy)}</p><p className="notice">{pick(activePath.example)}</p></div>
         </article>
       </section>
       <section id="lesson" className="section wrap">
-        <Heading number="03" tag={t('Mobile prototype','موبائل نمونہ')} title={t('Try a lesson','سبق آزمائیں')}>
+        <Heading number={3} ur={ur} tag={t('Mobile prototype','موبائل نمونہ')} title={t('Try a lesson','سبق آزمائیں')}>
           {t('Start with a short explanation, open its reference, then try a quick question.',
           'پہلے آسان وضاحت پڑھیں، پھر حوالہ دیکھیں اور آخر میں ایک چھوٹا سا سوال حل کریں۔')}
         </Heading>
@@ -268,7 +268,7 @@ export default function App() {
         </div>
       </section>
       <section id="manuscript" className="paper-section"><div className="wrap section">
-        <Heading number="04" tag={t('The original research','اصل تحقیق')} title={t('From manuscript to lesson','مسودے سے سبق تک')}>
+        <Heading number={4} ur={ur} tag={t('The original research','اصل تحقیق')} title={t('From manuscript to lesson','مسودے سے سبق تک')}>
           {t('You can see the original page, the typed text, the translation, and the lesson idea separately. The examples below show how I’d use the notes in the app.',
           'یہاں اصل صفحہ، اس کی ٹائپ کی ہوئی لکھائی، ترجمہ اور سبق کا نمونہ الگ الگ دیکھ سکتے ہیں۔ نیچے مثالوں میں بتایا ہے کہ میں اس لکھائی سے سبق کیسے بنانا چاہتا ہوں۔')}
         </Heading>
@@ -279,18 +279,18 @@ export default function App() {
           'میں لمبا تعارف چھوٹا رکھوں گا۔ ہر قرآنی آیت الگ دکھائیں گے اور حدیث کا حوالہ دبانے پر کھلے گا۔ کرنے کا طریقہ تصویروں میں دکھائیں گے۔ نازک سوال عمر کے حساب سے آسان لفظوں میں سمجھائیں گے۔ دینی عالم دیکھیں گے کہ بات کا اصل مطلب وہی رہے۔')}</p></div>
       </div></section>
       <section id="curriculum" className="wrap section">
-        <Heading number="05" tag={t('Seven topic groups','سات موضوعات')} title={t('Proposed curriculum','سبق میں کیا ہوگا؟')}>
+        <Heading number={5} ur={ur} tag={t('Seven topic groups','سات موضوعات')} title={t('Proposed curriculum','سبق میں کیا ہوگا؟')}>
           {t('I’d start with Wudu from beginning to end. We can add the other topics once they’ve been checked.',
           'میں پہلے وضو کا پورا طریقہ شامل کرنا چاہتا ہوں۔ باقی موضوعات چیک ہونے کے بعد شامل کر سکتے ہیں۔')}
         </Heading>
         <div className="topic-list">{topics.map((q,i) => <article key={q.en}>
-          <span className="topic-index">{String(i+1).padStart(2,'0')}</span>
+          <span className="topic-index">{pad(i+1, ur)}</span>
           <div><h3>{ur ? q.ur : q.en}</h3><p>{pick(q.outcome)}</p></div>
           <div><b>{pick(q.format)}</b><span className="badge">{q.sensitive ? t('An expert also needs to check this','اسے متعلقہ ماہر بھی چیک کرے گا') : t('Still to be checked','ابھی چیک ہونا ہے')}</span></div>
         </article>)}</div>
       </section>
       <section id="studio" className="paper-section"><div className="wrap section">
-        <Heading number="06" tag={t('CMS prototype','اسٹوڈیو کا نمونہ')} title={t('How lessons are made','اسباق کیسے تیار ہوں گے')}>
+        <Heading number={6} ur={ur} tag={t('CMS prototype','اسٹوڈیو کا نمونہ')} title={t('How lessons are made','اسباق کیسے تیار ہوں گے')}>
           {t('This is where the team will write, check, and publish lessons. In the demo, you can see the dashboard, add a piece to a lesson, see what different learners will get, and check what needs approval.',
           'یہاں ٹیم سبق بنائے گی، چیک کرے گی اور ایپ میں ڈالے گی۔ نمونے میں آپ ڈیش بورڈ دیکھ سکتے ہیں، سبق میں نیا حصہ لگا سکتے ہیں اور دیکھ سکتے ہیں کہ کس کو کیا دکھے گا اور کس چیز کی منظوری باقی ہے۔')}
         </Heading>
@@ -305,7 +305,7 @@ export default function App() {
           <Video kind="cms" locale={locale} label={t('Content Studio walkthrough','مواد کے اسٹوڈیو کا تعارف')} poster={screen(ur?'urduCms':'dash')}/>
         </div>
         <h3 className="subheading">{t('Who does what','کس کی کیا ذمہ داری ہے؟')}</h3>
-        <div className="comparison-grid">{roles.map(([name,description],i) => <article className="card" key={i}><small>0{i+1}</small>
+        <div className="comparison-grid">{roles.map(([name,description],i) => <article className="card" key={i}><small>{pad(i+1, ur)}</small>
           <h3>{pick(name)}</h3><p>{pick(description)}</p></article>)}</div>
         <div className="method"><h3>{t('How a lesson gets into the app','سبق ایپ میں کیسے آئے گا؟')}</h3>
           <ol>{[t('Draft','مسودہ'),t('Editorial and language review','لکھائی اور زبان کی جانچ'),t('Scholarly review','دینی جانچ'),t('Approved','منظور شدہ'),t('Published','شائع شدہ'),t('Available on next sync','انٹرنیٹ ملنے پر ایپ میں آئے گا')].map(s => <li key={s}>{s}</li>)}</ol>
@@ -313,7 +313,7 @@ export default function App() {
           'اگر چیک کرنے والا تبدیلی کہے تو سبق لکھنے والے کے پاس واپس جائے گا۔ ساری جانچ کے بعد ہی سبق ایپ میں آئے گا۔ انٹرنیٹ نہ ہو تو فون پر پہلے سے محفوظ منظور شدہ سبق پڑھ سکیں گے۔ نمونے میں یہی طریقہ دکھایا ہے۔')}</p></div>
       </div></section>
       <section id="release" className="wrap section">
-        <Heading number="07" tag={t('Delivery and review','تکمیل اور جائزہ')} title={t('First release and next steps','پہلا ورژن اور اگلے مراحل')}>
+        <Heading number={7} ur={ur} tag={t('Delivery and review','تکمیل اور جائزہ')} title={t('First release and next steps','پہلا ورژن اور اگلے مراحل')}>
           {t('I’d test the full Wudu lesson first, then add more topics.',
           'میری تجویز ہے کہ پہلے وضو کا پورا سبق آزما لیں، پھر باقی موضوع شامل کریں۔')}
         </Heading>

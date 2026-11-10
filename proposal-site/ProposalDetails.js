@@ -2,10 +2,11 @@ import React, { useRef, useState } from 'react';
 import inventory from './inventory.json';
 import { detailSections } from './proposal-details';
 import { decisions, prototype } from './content';
+import { art, num } from './format';
 
 const mobile = [
   ['welcome', 'Welcome', 'شروع کا صفحہ'], ['urdu', 'Urdu welcome', 'اردو میں شروع کا صفحہ'],
-  ['child', 'Child path', 'بچوں کا راستہ'], ['parent', 'Parent path', 'والدین کا راستہ'],
+  ['childPath', 'Child path', 'بچوں کا راستہ'], ['parent', 'Parent path', 'والدین کا راستہ'],
   ['lesson', 'Wudu lesson', 'وضو کا سبق'], ['step', 'Lesson step', 'سبق کا ایک قدم'],
   ['stepUr', 'Lesson step in Urdu', 'سبق کا قدم اردو میں'], ['quiz', 'Practice question', 'مشق کا سوال'],
   ['source', 'Reference', 'حوالہ'],
@@ -20,7 +21,7 @@ const studio = [
 const screenItems = screens => screens.map(([file, en, ur]) => ({src: '/screens/' + file + '.png', title: [en, ur]}));
 const manuscriptItems = [...inventory.sources].sort((a, b) => a.handwritten_page_number - b.handwritten_page_number)
   .map(page => ({ src: '/manuscript/' + page.source_id + '.jpg',
-    title: ['Page ' + page.handwritten_page_number, 'صفحہ ' + page.handwritten_page_number] }));
+    title: ['Page ' + page.handwritten_page_number, 'صفحہ ' + num(page.handwritten_page_number, true)] }));
 
 export const proposalLinks = [
   ['purpose','Purpose','مقصد'],
@@ -69,7 +70,7 @@ function Gallery({ title, items, locale }) {
       </div>
       <figure className="gallery-image">
         <img src={current.src} alt={pick(current.title)} loading="lazy" />
-        <figcaption aria-live="polite">{pick(current.title)} · <bdi>{selected + 1} / {items.length}</bdi></figcaption>
+        <figcaption aria-live="polite">{pick(current.title)} · <bdi dir="ltr">{num(selected + 1, ur)} / {num(items.length, ur)}</bdi></figcaption>
       </figure>
       <div className="gallery-bar gallery-controls">
         <button type="button" onClick={() => move(-1)}>{t('Previous','پچھلی تصویر')}</button>
@@ -135,7 +136,7 @@ export default function ProposalDetails({ locale, Video, ReleaseScope }) {
           ['promo',null,'Short Taharah promo','طہارت کا چھوٹا تعارف'],
         ].map(([kind, poster, en, urdu]) => <div className="card" key={kind}>
           <h3>{t(en, urdu)}</h3>
-          <Video kind={kind} locale={locale} label={t(en, urdu)} poster={poster ? '/screens/' + poster + '.png' : '/art/taharah-welcome-paper-cut.png'} />
+          <Video kind={kind} locale={locale} label={t(en, urdu)} poster={poster ? '/screens/' + poster + '.png' : art('welcome')} />
         </div>)}
       </div>
       <div className="proposal-originals">
