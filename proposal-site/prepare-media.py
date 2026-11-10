@@ -1,5 +1,4 @@
-"""Prepare the media used by the private proposal preview."""
-import json
+"""Regenerate the proposal walkthroughs and captions."""
 from pathlib import Path
 import re
 from shutil import copyfile
@@ -7,14 +6,7 @@ from shutil import copyfile
 site = Path(__file__).resolve().parent
 project = site.parent
 public = site / 'public'
-for name in ('media', 'manuscript'):
-    (public / name).mkdir(parents=True, exist_ok=True)
-
-sources = json.loads((site / 'inventory.json').read_text())['sources']
-for source in sources:
-    original = project / source['file']
-    if original.is_file():
-        copyfile(original, public / 'manuscript' / f"{source['source_id']}.jpg")
+(public / 'media').mkdir(parents=True, exist_ok=True)
 
 english_promo = [
     'Ever wondered what comes next while making Wudu?',

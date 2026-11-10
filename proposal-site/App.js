@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import inventory from './inventory.json';
 import { comparisons, decisions, learning, paths, priorities, prototype, roles, studio, topics } from './content';
 import ProposalDetails, { proposalLinks } from './ProposalDetails';
-import { art, artSet, num, pad } from './format';
+import { art, artSet, num, pad, screen, sitePath } from './format';
 import './style.css';
 
 const sections = [
@@ -14,7 +14,14 @@ const sections = [
   ['studio','Content Studio','سبق بنانے کی جگہ'],
   ['release','First release','پہلا ورژن'],
 ];
-const screen = name => '/screens/' + name + '.png';
+
+function sectionFromHash() {
+  try {
+    return document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  } catch {
+    return null;
+  }
+}
 
 function LinkButton({ href, children, secondary = false, external = false }) {
   return <a className={'action' + (secondary ? ' secondary' : '')} href={href}
@@ -29,9 +36,9 @@ function Heading({ number, ur, tag, title, children }) {
 function Video({ kind, locale, label, poster }) {
   const captions = locale === 'en' ? kind + '-en' : kind;
   return <video key={kind + locale} className={kind === 'promo' ? 'promo' : 'walkthrough'} controls playsInline preload="none"
-    poster={poster} aria-label={label} src={'/media/' + kind + '.mp4'}>
-    <track kind={locale === 'en' ? 'subtitles' : 'captions'} srcLang={locale} label={locale === 'ur' ? 'اردو' : 'English'} src={'/media/' + captions + '.vtt'} default />
-    <a href={'/media/' + kind + '.mp4'}>{label}</a>
+    poster={poster} aria-label={label} src={sitePath('media/' + kind + '.mp4')}>
+    <track kind={locale === 'en' ? 'subtitles' : 'captions'} srcLang={locale} label={locale === 'ur' ? 'اردو' : 'English'} src={sitePath('media/' + captions + '.vtt')} default />
+    <a href={sitePath('media/' + kind + '.mp4')}>{label}</a>
   </video>;
 }
 
@@ -93,9 +100,9 @@ function Manuscript({ ur }) {
         <b>{num(s.handwritten_page_number, ur)}</b><span>{ur ? s.topic_urdu : s.topic}</span><span aria-hidden="true" className="flip">↗</span>
       </button>)}</div>
     </div>
-    <dialog ref={dialog} onClick={e => { if (e.target === dialog.current) dialog.current.close(); }}>
+    <dialog ref={dialog} aria-labelledby="manuscript-title" onClick={e => { if (e.target === dialog.current) dialog.current.close(); }}>
       {selected && <div className="dialog-body">
-        <div className="inventory-head"><h3>{t('Manuscript page','مسودے کا صفحہ')} {num(selected.handwritten_page_number, ur)}</h3>
+        <div className="inventory-head"><h3 id="manuscript-title">{t('Manuscript page','مسودے کا صفحہ')} {num(selected.handwritten_page_number, ur)}</h3>
           <button className="close" aria-label={t('Close manuscript viewer','مسودہ بند کریں')} onClick={() => dialog.current.close()}>×</button></div>
         <p>{ur ? selected.topic_urdu : selected.topic} <small className="badge">{t('Page number verified','صفحہ نمبر چیک ہو گیا')}</small></p>
         {match?.pages.length > 1 && <div className="tabs" role="group" aria-label={t('Pages in this comparison','اس موازنے کے صفحات')}>
@@ -111,8 +118,8 @@ function Manuscript({ ur }) {
         {view === 0 && (process.env.EXPO_PUBLIC_SHOW_MANUSCRIPTS !== '1'
           ? <p className="notice">{t('Original scans are available in the private review copy.','اصل تصویریں صرف نجی جائزے کی کاپی میں موجود ہیں۔')}</p>
           : imageAllowed ? <>
-          <img className="manuscript-image" src={'/manuscript/' + selected.source_id + '.jpg'} alt={t('Handwritten manuscript page','قلمی مسودے کا صفحہ') + ' ' + num(selected.handwritten_page_number, ur)} />
-          <LinkButton external secondary href={'/manuscript/' + selected.source_id + '.jpg'}>{t('Open full-size image','مکمل تصویر کھولیں')}</LinkButton>
+          <img className="manuscript-image" src={sitePath('manuscript/' + selected.source_id + '.jpg')} alt={t('Handwritten manuscript page','قلمی مسودے کا صفحہ') + ' ' + num(selected.handwritten_page_number, ur)} />
+          <LinkButton external secondary href={sitePath('manuscript/' + selected.source_id + '.jpg')}>{t('Open full-size image','مکمل تصویر کھولیں')}</LinkButton>
         </> : <div className="notice"><p>{t('Open originals only if you have permission to review the manuscript.','اصل تصاویر صرف اس صورت میں کھولیں جب آپ کو مسودے کے جائزے کی اجازت ہو۔')}</p>
           <button className="action" onClick={() => setImageAllowed(true)}>{t('I have permission to view','مجھے دیکھنے کی اجازت ہے')}</button></div>)}
         {view === 1 && <p className="notice">{selected.transcription || t('We still need to check the typed text against the original and mark anything that is hard to read.',
@@ -151,17 +158,34 @@ export default function App() {
   });
   const [path,setPath] = useState(0);
   const [watch,setWatch] = useState(false);
+  const languageScroll = useRef(null);
   const ur = locale === 'ur';
   const t = (en, urdu) => ur ? urdu : en;
   const pick = pair => pair[Number(ur)];
   const activePath = paths[path];
   const detailed = typeof window !== 'undefined' && new URLSearchParams(location.search).get('view') === 'proposal';
   const pageSections = detailed ? proposalLinks : sections;
-  const detailUrl = ur ? '/?view=proposal&lang=ur' : '/?view=proposal';
+  const detailUrl = sitePath(ur ? '?view=proposal&lang=ur' : '?view=proposal');
 
   useEffect(() => {
     document.documentElement.lang = locale;
     document.documentElement.dir = ur ? 'rtl' : 'ltr';
+    const savedScroll = languageScroll.current;
+    languageScroll.current = null;
+    if (savedScroll) {
+      const { anchor, top } = savedScroll;
+      const restore = () => {
+        if (top === null) anchor.scrollIntoView();
+        else window.scrollBy(0, anchor.getBoundingClientRect().top - top);
+      };
+      restore();
+      const afterLayout = window.scrollY;
+      document.fonts.ready.then(() => {
+        if (Math.abs(window.scrollY - afterLayout) < 2) {
+          restore();
+        }
+      });
+    }
     document.title = detailed ? t('Taharah · Full proposal','طہارت · پوری تجویز') : t('Taharah · Learn step by step','طہارت · قدم بہ قدم سیکھیں');
     if (!document.querySelector('meta[name="robots"]')) {
       const robots = document.createElement('meta');
@@ -170,6 +194,22 @@ export default function App() {
       document.head.append(robots);
     }
   }, [locale, detailed]);
+
+  useEffect(() => {
+    const url = location.href;
+    const target = sectionFromHash();
+    if (!target) return;
+    let cancelled = false;
+    const frame = requestAnimationFrame(() => {
+      document.fonts.ready.then(() => {
+        if (!cancelled && location.href === url) target.scrollIntoView();
+      });
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useEffect(() => {
     function pauseVideos() {
@@ -184,23 +224,29 @@ export default function App() {
 
   function switchLanguage(value) {
     if (value === locale) return;
-    const top = document.querySelector('header').getBoundingClientRect().bottom + 12;
-    const current = pageSections.map(([id]) => document.getElementById(id)).filter(Boolean)
-      .findLast(el => el.getBoundingClientRect().top <= top);
-    const anchor = current || document.getElementById('main');
-    const previous = anchor.getBoundingClientRect().top;
+    const headerBottom = document.querySelector('header').getBoundingClientRect().bottom;
+    const scrollPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+    const top = Math.max(headerBottom, scrollPadding) + 12;
+    const current = Array.from(document.querySelectorAll('main section[id]'))
+      .findLast(section => section.getBoundingClientRect().top <= top);
+    const linked = sectionFromHash();
+    const linkedTop = linked?.getBoundingClientRect().top;
+    if (linked && linkedTop >= 0 && linkedTop < window.innerHeight) {
+      languageScroll.current = { anchor: linked, top: null };
+    } else {
+      const anchor = current || document.getElementById('main');
+      languageScroll.current = { anchor, top: anchor.getBoundingClientRect().top };
+    }
     const url = new URL(location.href);
     url.searchParams.set('lang',value);
     history.replaceState(null,'',url);
     setLocale(value);
-    requestAnimationFrame(() => requestAnimationFrame(() =>
-      window.scrollBy(0,anchor.getBoundingClientRect().top - previous)));
   }
 
   return <div className="site" lang={locale} dir={ur ? 'rtl' : 'ltr'}>
     <a className="skip" href="#main">{t('Skip to content','مواد پر جائیں')}</a>
     <header><div className="header-inner">
-      <a className="brand" href={detailed ? (ur ? '/?lang=ur' : '/') : '#main'}><span className="brand-icon" aria-hidden="true">✦</span><span>{t('Taharah','طہارت')}</span></a>
+      <a className="brand" href={detailed ? sitePath(ur ? '?lang=ur' : '') : '#main'}><span className="brand-icon" aria-hidden="true">✦</span><span>{t('Taharah','طہارت')}</span></a>
       <nav aria-label={t('Proposal sections','تجویز کے حصے')}>
         {!detailed && <a className="full-proposal-link" href={detailUrl}>{t('Full proposal','پوری تجویز')}</a>}
         {pageSections.filter(s => s[0] !== 'audiences').map(([id,en,urdu]) => <a key={id} href={'#'+id}>{t(en,urdu)}</a>)}
@@ -221,7 +267,7 @@ export default function App() {
           <LinkButton secondary href={detailUrl}>{t('Read the full proposal','پوری تجویز پڑھیں')}</LinkButton></div>
           <div className="hero-notes"><span>{t('No ads','اشتہار نہیں ہوں گے')}</span><span>{t('Offline learning planned','انٹرنیٹ کے بغیر سبق')}</span><span>{t('We’ll check the references','حوالے چیک ہوں گے')}</span></div>
         </div>
-        <figure className="hero-art"><img src={art('welcome')} srcSet={artSet('welcome')} sizes="(max-width: 900px) 100vw, 46vw" width="1200" height="900" fetchPriority="high" decoding="async" alt={t('Paper-cut illustration of a learner preparing for Wudu','وضو کی تیاری کرتے بچے کی کاغذی تصویر')} />
+        <figure className="hero-art"><img src={art('welcome')} srcSet={artSet('welcome')} sizes="(max-width: 740px) 100vw, 46vw" width="1200" height="900" fetchPriority="high" decoding="async" alt={t('Paper-cut illustration of a learner preparing for Wudu','وضو کی تیاری کرتے بچے کی کاغذی تصویر')} />
           <figcaption><span>{t('The Taharah learning experience','طہارت میں سیکھنے کا تجربہ')}</span><b><bdi dir="ltr">{pad(1, ur)} / {pad(7, ur)}</bdi></b></figcaption>
         </figure>
       </div>
@@ -249,7 +295,7 @@ export default function App() {
         <div className="tabs" role="group" aria-label={t('Choose an audience','گروہ منتخب کریں')}>
           {paths.map((p,i) => <button key={i} aria-pressed={path===i} onClick={() => setPath(i)}>{pick(p.title)}</button>)}
         </div>
-        <article className="audience-panel" aria-live="polite"><img src={art(activePath.art)} srcSet={artSet(activePath.art)} sizes="(max-width: 900px) 100vw, 40vw" width="1200" height="900" alt={pick(activePath.title)} loading="lazy" decoding="async" />
+        <article className="audience-panel" aria-live="polite"><img src={art(activePath.art)} srcSet={artSet(activePath.art)} sizes="(max-width: 740px) 100vw, 40vw" width="1200" height="900" alt={pick(activePath.title)} loading="lazy" decoding="async" />
           <div><div className="eyebrow">{t('Same topic · Wudu','ایک ہی موضوع · وضو')}</div><h3>{pick(activePath.title)}</h3>
           <p>{pick(activePath.copy)}</p><p className="notice">{pick(activePath.example)}</p></div>
         </article>

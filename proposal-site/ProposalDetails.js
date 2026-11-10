@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import inventory from './inventory.json';
 import { detailSections } from './proposal-details';
+import WuduExample from './WuduExample';
 import { decisions, prototype } from './content';
-import { art, num } from './format';
+import { art, num, screen, sitePath } from './format';
 
 const mobile = [
   ['welcome', 'Welcome', 'شروع کا صفحہ'], ['urdu', 'Urdu welcome', 'اردو میں شروع کا صفحہ'],
@@ -18,14 +19,15 @@ const studio = [
   ['review', 'Review', 'جانچ'], ['urduCms', 'Urdu editor', 'اردو میں سبق بنائیں'],
   ['teaser-parent-urdu', 'Urdu dashboard', 'اردو ڈیش بورڈ'],
 ];
-const screenItems = screens => screens.map(([file, en, ur]) => ({src: '/screens/' + file + '.png', title: [en, ur]}));
+const screenItems = screens => screens.map(([file, en, ur]) => ({src: screen(file), title: [en, ur]}));
 const manuscriptItems = [...inventory.sources].sort((a, b) => a.handwritten_page_number - b.handwritten_page_number)
-  .map(page => ({ src: '/manuscript/' + page.source_id + '.jpg',
+  .map(page => ({ src: sitePath('manuscript/' + page.source_id + '.jpg'),
     title: ['Page ' + page.handwritten_page_number, 'صفحہ ' + num(page.handwritten_page_number, true)] }));
 
 export const proposalLinks = [
   ['purpose','Purpose','مقصد'],
   ['experience','Learning experience','سیکھنے کا طریقہ'],
+  ['worked-lesson','Wudu example','وضو کی مثال'],
   ['system','Lesson management','سبق سنبھالنے کا نظام'],
   ['offline','Offline and updates','آف لائن اور اپ ڈیٹ'],
   ['scope','Launch scope','پہلا ورژن'],
@@ -97,7 +99,7 @@ export default function ProposalDetails({ locale, Video, ReleaseScope }) {
     </div>
     {detailSections.map(({id, title, intro, items, ordered, cards}) => {
       const List = ordered ? 'ol' : 'ul';
-      return <section className="detail-section" id={id} key={id}>
+      return <React.Fragment key={id}><section className="detail-section" id={id}>
         <h2>{pick(title)}</h2>
         {intro && <p>{pick(intro)}</p>}
         {items && <List className="detail-list">{items.map(item => <li key={item[0]}>{pick(item)}</li>)}</List>}
@@ -105,7 +107,7 @@ export default function ProposalDetails({ locale, Video, ReleaseScope }) {
           <h3>{pick(heading)}</h3><p>{pick(copy)}</p>
         </article>)}</div>}
         {id === 'offline' && <a className="text-button" href="https://docs.expo.dev/eas-update/runtime-versions/" target="_blank" rel="noreferrer">{t('Expo guide to compatible app updates','ایپ اپ ڈیٹ کے بارے میں Expo کی گائیڈ')}</a>}
-      </section>;
+      </section>{id === 'editorial' && <WuduExample locale={locale} />}</React.Fragment>;
     })}
     <section className="detail-section" id="scope">
       <h2>{t('What goes into the first version?', 'پہلے ورژن میں کیا ہوگا؟')}</h2>
@@ -124,6 +126,7 @@ export default function ProposalDetails({ locale, Video, ReleaseScope }) {
     </section>
     <section className="detail-section" id="examples">
       <h2>{t('See the screens and hear the walkthroughs', 'اسکرینیں دیکھیں اور ویڈیو میں سمجھیں')}</h2>
+      <p>{t('The prototype links open in Figma and may require access. The screenshots and videos below are available here.', 'نمونے کے لنک Figma میں کھلتے ہیں اور اجازت مانگ سکتے ہیں۔ تصویریں اور ویڈیو یہیں دیکھ سکتے ہیں۔')}</p>
       <Gallery title={t('Mobile app mockups','موبائل ایپ کے نمونے')} locale={locale} items={screenItems(mobile)} />
       <a className="action secondary" href={prototype.mobile} target="_blank" rel="noreferrer">{t('Try the mobile prototype','موبائل ایپ کا نمونہ آزمائیں')}</a>
       <Gallery title={t('Lesson management mockups','سبق سنبھالنے کی اسکرینیں')} locale={locale} items={screenItems(studio)} />
@@ -136,7 +139,7 @@ export default function ProposalDetails({ locale, Video, ReleaseScope }) {
           ['promo',null,'Short Taharah promo','طہارت کا چھوٹا تعارف'],
         ].map(([kind, poster, en, urdu]) => <div className="card" key={kind}>
           <h3>{t(en, urdu)}</h3>
-          <Video kind={kind} locale={locale} label={t(en, urdu)} poster={poster ? '/screens/' + poster + '.png' : art('welcome')} />
+          <Video kind={kind} locale={locale} label={t(en, urdu)} poster={poster ? screen(poster) : art('welcome')} />
         </div>)}
       </div>
       <div className="proposal-originals">
@@ -155,7 +158,7 @@ export default function ProposalDetails({ locale, Video, ReleaseScope }) {
       <p>{t('Put the learning experience first. Build the review process, content versions, and offline access alongside the first lesson so the team can keep adding material after launch.',
         'سب سے پہلے دیکھیں کہ سبق سمجھنا آسان ہو۔ پہلے سبق کے ساتھ جانچ، سبق کے پرانے ورژن اور انٹرنیٹ کے بغیر پڑھنے کا انتظام بنائیں تاکہ ٹیم بعد میں بھی نئے سبق ڈال سکے۔')}</p>
       <ul>{decisions.map(item => <li key={item[0]}>{pick(item)}</li>)}</ul>
-      <a className="action secondary" href={ur ? '/?lang=ur' : '/'}>{t('Back to the overview','مختصر تجویز پر واپس جائیں')}</a>
+      <a className="action secondary" href={sitePath(ur ? '?lang=ur' : '')}>{t('Back to the overview','مختصر تجویز پر واپس جائیں')}</a>
     </section>
   </main>;
 }

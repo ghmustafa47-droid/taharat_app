@@ -1,0 +1,44 @@
+name: Proposal checks
+
+on:
+  push:
+    branches: [main, 'review/**']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mount: [root, subpath]
+    defaults:
+      run:
+        working-directory: proposal-site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: proposal-site/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium webkit
+      - run: |
+          python3 prepare-media.py
+          git diff --exit-code -- public/media
+      - if: matrix.mount == 'root'
+        run: |
+          npm run build
+          npm test
+      - if: matrix.mount == 'subpath'
+        run: |
+          TAHARAH_BASE_PATH=/taharat_app npm run build
+          mkdir -p .preview
+          mv dist .preview/taharat_app
+          TAHARAH_TEST_BASE_PATH=/taharat_app npm test
